@@ -25,7 +25,13 @@
       <version>2.4.2</version>
     </dependency>
 
-    <!-- 依赖 domain ， 导入一些数据依赖 -->
+    <!-- domain -->
+    <dependency>
+      <groupId>com.club</groupId>
+      <artifactId>club-domain</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <!-- 依赖 infra -->
     <dependency>
       <groupId>com.club</groupId>
       <artifactId>club-infra</artifactId>

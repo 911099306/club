@@ -1,19 +1,19 @@
 server:
-  port: 8080
+  port: 3010
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/club?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    username: root
-    password: XL00n2Q5YzQs5Fv+Xzl47CvMcuBbJL972txQPnpkjYLTU6uGeBlvkq+IwfBL0ObC/LA8dcDp210XsExDah8jCQ==
+    url: jdbc:mysql://${datasourceInfo.url}/club?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: ${datasourceInfo.username}
+    password: ${datasourceInfo.password}
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20
       min-idle: 20
       max-active: 100
       max-wait: 60000
-      connectionProperties: config.decrypt=true;config.decrypt.key=${publicKey};
+      connectionProperties: config.decrypt=true;config.decrypt.key=${datasourceInfo.publicKey};
       stat-view-servlet:
         enabled: true
         url-pattern: /druid/*
@@ -30,5 +30,13 @@ spring:
           enabled: true
 
 
+logging:
+  config: classpath:log4j2-spring.xml
 
-publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIB5ThZFdDigDHaoZGEB6pKFlzULxInDXfAtJe4KhBSYojvCu3ySkbcp+TuWVM3arQnRnAj6Wc9IKcuoxxNaKvsCAwEAAQ==
+datasourceInfo:
+#  url: bRJh3iJu9n82cu4VwFaZaQpM1KnmEDjfQm6TZBxCLKCDG9LNvCd0basar7RnTyw649Ry/uqKaGB0lJ+Fw86cqA==
+  url: localhost:3306
+#  username: c4NF5rNaDpIHKOhkurb2gB6HDiAucYKEb6BzLHmzWJj076iM/2Wjyt1hV8EzmHzQ3d/bNM3W8nZ0rPLlboSUig==
+  username: root
+  password: f19oQzh2FZ0W3JCPZyAW/HSl9FrhDwzXn7vLJN80PAoWNhbe7+I6KX4auhdPosg7vZ/FJ34nwH1ClcmLGPirWQ==
+  publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJxGEprGMpyYipdNTmpVQRW2icTN7x6cITLUpiAWgvbRgWfSGNon4UYpmEtkIkibubiGZ1LSVGfxSp/3PbnguesCAwEAAQ==

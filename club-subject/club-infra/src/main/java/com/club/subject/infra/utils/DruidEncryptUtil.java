@@ -43,12 +43,12 @@ public class DruidEncryptUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        String encrypt = encrypt("pray1314");
-
+        String url = encrypt("localhost:3306");
+        String username = encrypt("root");
+        String pwd = encrypt("pray1314");
         System.out.println(" = " );
-
-        System.out.println("encrypt = " + encrypt);
-        String pwd = decrypt(encrypt);
+        System.out.println("url = " + url);
+        System.out.println("username = " + username);
         System.out.println("pwd = " + pwd);
     }
 }
