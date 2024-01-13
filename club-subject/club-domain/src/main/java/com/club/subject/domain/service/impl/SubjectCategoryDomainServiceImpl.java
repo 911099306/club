@@ -34,7 +34,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     @Override
     public void add(SubjectCategoryBO subjectCategoryBO) {
         if (log.isInfoEnabled()) {
-            log.info("SubjectCategoryController.add.bo:{}", JSON.toJSONString(subjectCategoryBO));
+            log.info("SubjectCategoryDomainServiceImpl.add.bo:{}", JSON.toJSONString(subjectCategoryBO));
         }
         SubjectCategory subjectCategory = SubjectCategoryConverter.INSTANCE
                 .convertBoToCategory(subjectCategoryBO);
