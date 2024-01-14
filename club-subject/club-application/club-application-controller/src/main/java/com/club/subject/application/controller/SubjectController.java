@@ -66,8 +66,8 @@ public class SubjectController {
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDtoToInfoBo(subjectInfoDTO);
             List<SubjectAnswerBO> subjectAnswerBOList = SubjecAnswerDTOConverter.INSTANCE.convertListDtoToAnswerBo(subjectInfoDTO.getOptionList());
             subjectInfoBO.setOptionList(subjectAnswerBOList);
-            Boolean success = subjectInfoDomainService.add(subjectInfoBO);
-            return Result.ok(success);
+            subjectInfoDomainService.add(subjectInfoBO);
+            return Result.ok(true);
 
         } catch (Exception e) {
             log.error("SubjectController.add.err:{}", e.getMessage(), e);
