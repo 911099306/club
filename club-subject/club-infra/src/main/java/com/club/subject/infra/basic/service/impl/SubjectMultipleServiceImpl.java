@@ -7,6 +7,7 @@ import com.club.subject.infra.basic.service.SubjectMultipleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 多选题信息表(SubjectMultiple)表服务实现类
@@ -65,5 +66,10 @@ public class SubjectMultipleServiceImpl implements SubjectMultipleService {
     @Override
     public boolean deleteById(Long id) {
         return this.subjectMultipleDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public void batchInsert(List<SubjectMultiple> subjectMultipleList) {
+         this.batchInsert(subjectMultipleList);
     }
 }

@@ -53,4 +53,10 @@ public interface SubjectMappingService {
      * @return
      */
     List<SubjectMapping> queryLabelIds(SubjectMapping subjectMapping);
+
+    /**
+     * 批量插入mapping 数据
+     * @param subjectMappingList
+     */
+    void batchInsert(List<SubjectMapping> subjectMappingList);
 }

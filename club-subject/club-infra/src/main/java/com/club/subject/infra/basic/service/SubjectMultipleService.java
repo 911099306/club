@@ -3,6 +3,8 @@ package com.club.subject.infra.basic.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.club.subject.infra.basic.entity.SubjectMultiple;
 
+import java.util.List;
+
 /**
  * 多选题信息表(SubjectMultiple)表服务接口
  *
@@ -45,4 +47,9 @@ public interface SubjectMultipleService {
      */
     boolean deleteById(Long id);
 
+    /**
+     * 普良插入 多选题目
+     * @param subjectMultipleList
+     */
+    void batchInsert(List<SubjectMultiple> subjectMultipleList);
 }
