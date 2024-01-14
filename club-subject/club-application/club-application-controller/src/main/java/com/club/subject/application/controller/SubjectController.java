@@ -6,6 +6,8 @@ import com.club.subject.application.converter.SubjectCategoryDTOConverter;
 import com.club.subject.application.converter.SubjectInfoDTOConverter;
 import com.club.subject.application.dto.SubjectCategoryDTO;
 import com.club.subject.application.dto.SubjectInfoDTO;
+import com.club.subject.common.entity.PageInfo;
+import com.club.subject.common.entity.PageResult;
 import com.club.subject.common.entity.Result;
 import com.club.subject.domain.entity.SubjectAnswerBO;
 import com.club.subject.domain.entity.SubjectCategoryBO;
@@ -42,7 +44,7 @@ public class SubjectController {
     private final SubjectInfoDomainService subjectInfoDomainService;
 
     /**
-     * 增加一条分类信息
+     * 新增题目
      * @param subjectInfoDTO
      * @return
      */
@@ -68,6 +70,34 @@ public class SubjectController {
             subjectInfoBO.setOptionList(subjectAnswerBOList);
             subjectInfoDomainService.add(subjectInfoBO);
             return Result.ok(true);
+
+        } catch (Exception e) {
+            log.error("SubjectController.add.err:{}", e.getMessage(), e);
+            return Result.fail(e.getMessage());
+        }
+    }
+
+    /**
+     * 列表题目查询
+     *
+     * @param subjectInfoDTO
+     * @return
+     */
+    @PostMapping("/getSubjectPage")
+    public Result<PageResult<SubjectInfoDTO>> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.getSubjectPage.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+
+            // 使用 guava 对入参进行校验
+            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "分类id不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "标签id不能为空");
+
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDtoToInfoBo(subjectInfoDTO);
+            PageResult<SubjectInfoBO> boList = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
+            return Result.ok(result);
 
         } catch (Exception e) {
             log.error("SubjectController.add.err:{}", e.getMessage(), e);

@@ -1,5 +1,6 @@
 package com.club.subject.domain.service.impl;
 
+import com.club.subject.common.entity.PageResult;
 import com.club.subject.domain.convert.SubjectAnswerConverter;
 import com.club.subject.domain.convert.SubjectInfoConverter;
 import com.club.subject.domain.entity.SubjectInfoBO;
@@ -75,7 +76,31 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
             });
         });
         subjectMappingService.batchInsert(subjectMappingList);
+    }
 
+    /**
+     * 分页查询
+     * @param subjectInfoBO
+     * @return
+     */
+    @Override
+    public PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO) {
+        PageResult<SubjectInfoBO> pageResult = new PageResult<>();
+        pageResult.setPageNo(subjectInfoBO.getPageNo());
+        pageResult.setPageSize(subjectInfoBO.getPageSize());
+        int start = (subjectInfoBO.getPageNo() - 1) * subjectInfoBO.getPageSize();
+        SubjectInfo subjectInfo = SubjectInfoConverter.INSTANCE.convertBoToInfo(subjectInfoBO);
+        int count = subjectInfoService.countByCondition(subjectInfo,subjectInfoBO.getCategoryId(), subjectInfoBO.getLabelId());
+        if (count == 0) {
+            return pageResult;
+        }
+        pageResult.setTotal(count);
 
+        List<SubjectInfo> subjectInfoList = subjectInfoService.queryPage(subjectInfo, subjectInfoBO.getCategoryId(),
+                subjectInfoBO.getLabelId(), start, subjectInfoBO.getPageSize());
+        List<SubjectInfoBO> subjectInfoBOList = SubjectInfoConverter.INSTANCE.convertBoListToInfoList(subjectInfoList);
+        pageResult.setRecords(subjectInfoBOList);
+
+        return pageResult;
     }
 }

@@ -22,7 +22,7 @@ public class PageResult<T> {
     private Integer start = 1;
     private Integer end = 0;
 
-    public void getRecords(List<T> result) {
+    public void setRecords(List<T> result) {
         this.result = result;
         if (result != null && !result.isEmpty()) {
             setTotal(result.size());

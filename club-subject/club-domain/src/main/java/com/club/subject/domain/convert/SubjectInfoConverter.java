@@ -7,6 +7,8 @@ import com.club.subject.infra.basic.entity.SubjectLabel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author serendipity
  * @version 1.0
@@ -18,6 +20,7 @@ public interface SubjectInfoConverter {
     SubjectInfoConverter INSTANCE = Mappers.getMapper(SubjectInfoConverter.class);
 
     SubjectInfo convertBoToInfo(SubjectInfoBO subjectInfoBO);
+    List<SubjectInfoBO> convertBoListToInfoList(List<SubjectInfo> subjectInfoList);
 
 
 }

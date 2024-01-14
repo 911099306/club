@@ -1,5 +1,6 @@
 package com.club.subject.domain.entity;
 
+import com.club.subject.common.entity.PageInfo;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class SubjectInfoBO implements Serializable {
+public class SubjectInfoBO extends PageInfo implements Serializable {
     private static final long serialVersionUID = 614321567376348694L;
 
     /**
