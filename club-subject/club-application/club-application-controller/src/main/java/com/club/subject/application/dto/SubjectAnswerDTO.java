@@ -1,7 +1,9 @@
 package com.club.subject.application.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,7 +13,8 @@ import java.io.Serializable;
  * @date 2024/1/13
  **/
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubjectAnswerDTO implements Serializable {
     /**
      * 答案选项标识

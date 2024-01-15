@@ -1,7 +1,6 @@
 package com.club.subject.domain.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,7 +10,8 @@ import java.io.Serializable;
  * @date 2024/1/13
  **/
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubjectAnswerBO implements Serializable {
     /**
      * 答案选项标识

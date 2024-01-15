@@ -38,7 +38,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("")
+@RequestMapping("/subject")
 public class SubjectController {
 
     private final SubjectInfoDomainService subjectInfoDomainService;
@@ -97,7 +97,7 @@ public class SubjectController {
 
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDtoToInfoBo(subjectInfoDTO);
             PageResult<SubjectInfoBO> boList = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
-            return Result.ok(result);
+            return Result.ok(boList);
 
         } catch (Exception e) {
             log.error("SubjectController.add.err:{}", e.getMessage(), e);

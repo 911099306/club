@@ -73,7 +73,7 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
     @Override
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
         Long categoryId = subjectLabelBO.getCategoryId();
-        SubjectMapping subjectMapping = new SubjectMapping();
+        SubjectMapping subjectMapping =SubjectMapping.builder().build();
         subjectMapping.setCategoryId(categoryId);
         subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         // 根据categoryId，在 SubjectMapping 表下，获取所有的label 的id 信息

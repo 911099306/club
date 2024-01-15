@@ -1,8 +1,10 @@
 package com.club.subject.domain.entity;
 
 import com.club.subject.common.entity.PageInfo;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +17,8 @@ import java.util.List;
  * @since 2024-01-13 21:39:57
  */
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubjectInfoBO extends PageInfo implements Serializable {
     private static final long serialVersionUID = 614321567376348694L;
 
