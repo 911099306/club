@@ -1,8 +1,10 @@
 package com.club.subject.application.dto;
 
 import com.club.subject.common.entity.PageInfo;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,8 +18,10 @@ import java.util.List;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubjectInfoDTO extends PageInfo implements Serializable {
-    private static final long serialVersionUID = 6241562315676348694L;
+    private static final long serialVersionUID = 15612384576348694L;
 
     /**
      * 主键

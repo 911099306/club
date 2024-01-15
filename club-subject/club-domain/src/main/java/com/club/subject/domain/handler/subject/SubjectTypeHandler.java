@@ -2,6 +2,7 @@ package com.club.subject.domain.handler.subject;
 
 import com.club.subject.common.enums.SubjectInfoTypeEnum;
 import com.club.subject.domain.entity.SubjectInfoBO;
+import com.club.subject.domain.entity.SubjectOptionBO;
 import com.club.subject.infra.basic.entity.SubjectInfo;
 
 /**
@@ -21,4 +22,8 @@ public interface SubjectTypeHandler {
      */
     void add(SubjectInfoBO subjectInfoBO );
 
+    /**
+     * 实际的题目输入
+     */
+    SubjectOptionBO query(int subjectId );
 }

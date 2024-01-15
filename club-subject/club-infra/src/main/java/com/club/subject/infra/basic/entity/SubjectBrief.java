@@ -1,7 +1,9 @@
 package com.club.subject.infra.basic.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.io.Serializable;
  * @since 2024-01-13 21:40:17
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class SubjectBrief implements Serializable {
     private static final long serialVersionUID = -62737209175602372L;

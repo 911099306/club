@@ -1,11 +1,16 @@
 package com.club.subject.domain.handler.subject;
 
+import com.club.subject.common.enums.IsDeletedFlagEnum;
 import com.club.subject.common.enums.SubjectInfoTypeEnum;
+import com.club.subject.domain.convert.RadioSubjectConverter;
 import com.club.subject.domain.convert.SubjectRadioConverter;
+import com.club.subject.domain.entity.SubjectAnswerBO;
 import com.club.subject.domain.entity.SubjectInfoBO;
+import com.club.subject.domain.entity.SubjectOptionBO;
 import com.club.subject.infra.basic.entity.SubjectRadio;
 import com.club.subject.infra.basic.service.SubjectRadioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +22,7 @@ import java.util.List;
  * @version 1.0
  * @date 2024/1/13
  **/
+@Component
 @RequiredArgsConstructor
 public class RadioTypeHandler implements SubjectTypeHandler {
 
@@ -35,9 +41,21 @@ public class RadioTypeHandler implements SubjectTypeHandler {
         subjectInfoBO.getOptionList().forEach(option -> {
             SubjectRadio subjectRadio = SubjectRadioConverter.INSTANCE.convertBoToEntity(option);
             subjectRadio.setSubjectId(subjectInfoBO.getId());
+            subjectRadio.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
             subjectRadioList.add(subjectRadio);
         });
 
         subjectRadioService.batchInsert(subjectRadioList);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectRadio subjectRadio = new SubjectRadio();
+        subjectRadio.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectRadio> result = subjectRadioService.queryByCondition(subjectRadio);
+        List<SubjectAnswerBO> subjectAnswerBOList = RadioSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 }

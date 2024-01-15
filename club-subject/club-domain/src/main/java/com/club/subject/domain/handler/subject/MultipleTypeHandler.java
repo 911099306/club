@@ -3,7 +3,9 @@ package com.club.subject.domain.handler.subject;
 import com.club.subject.common.enums.IsDeletedFlagEnum;
 import com.club.subject.common.enums.SubjectInfoTypeEnum;
 import com.club.subject.domain.convert.MultipleSubjectConverter;
+import com.club.subject.domain.entity.SubjectAnswerBO;
 import com.club.subject.domain.entity.SubjectInfoBO;
+import com.club.subject.domain.entity.SubjectOptionBO;
 import com.club.subject.infra.basic.entity.SubjectMultiple;
 import com.club.subject.infra.basic.service.SubjectMultipleService;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +43,16 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
         });
         subjectMultipleService.batchInsert(subjectMultipleList);
         
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectMultiple subjectMultiple = new SubjectMultiple();
+        subjectMultiple.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectMultiple> result = subjectMultipleService.queryByCondition(subjectMultiple);
+        List<SubjectAnswerBO> subjectAnswerBOList = MultipleSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 }

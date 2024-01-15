@@ -2,12 +2,16 @@ package com.club.subject.domain.handler.subject;
 
 import com.club.subject.common.enums.IsDeletedFlagEnum;
 import com.club.subject.common.enums.SubjectInfoTypeEnum;
+import com.club.subject.domain.convert.JudgeSubjectConverter;
 import com.club.subject.domain.entity.SubjectAnswerBO;
 import com.club.subject.domain.entity.SubjectInfoBO;
+import com.club.subject.domain.entity.SubjectOptionBO;
 import com.club.subject.infra.basic.entity.SubjectJudge;
 import com.club.subject.infra.basic.service.SubjectJudgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 单选的策略类
@@ -38,5 +42,16 @@ public class JudgeTypeHandler implements SubjectTypeHandler{
                 .build();
 
         subjectJudgeService.insert(subjectJudge);
+    }
+
+    @Override
+    public SubjectOptionBO query(int subjectId) {
+        SubjectJudge subjectJudge = new SubjectJudge();
+        subjectJudge.setSubjectId(Long.valueOf(subjectId));
+        List<SubjectJudge> result = subjectJudgeService.queryByCondition(subjectJudge);
+        List<SubjectAnswerBO> subjectAnswerBOList = JudgeSubjectConverter.INSTANCE.convertEntityToBoList(result);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOList);
+        return subjectOptionBO;
     }
 }

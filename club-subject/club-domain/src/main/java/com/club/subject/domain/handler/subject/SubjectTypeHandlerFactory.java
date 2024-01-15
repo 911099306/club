@@ -22,7 +22,7 @@ public class SubjectTypeHandlerFactory implements InitializingBean {
     private final List<SubjectTypeHandler> subjectTypeHandlerList;
 
 
-    private final Map<SubjectInfoTypeEnum, SubjectTypeHandler> handlerMap = new HashMap<>();
+    private Map<SubjectInfoTypeEnum, SubjectTypeHandler> handlerMap = new HashMap<>();
 
     public SubjectTypeHandler getHandler(int subjectType) {
         SubjectInfoTypeEnum typeEnum = SubjectInfoTypeEnum.getByCode(subjectType);

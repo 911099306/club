@@ -30,6 +30,13 @@ public interface SubjectInfoDomainService {
      */
     PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO);
 
+    /**
+     * 查询题目信息
+     * @param subjectInfoBO
+     * @return
+     */
+    SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO);
+
     // /**
     //  * 更新标签信息
     //  *

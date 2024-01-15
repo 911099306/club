@@ -14,6 +14,7 @@ import com.club.subject.domain.entity.SubjectCategoryBO;
 import com.club.subject.domain.entity.SubjectInfoBO;
 import com.club.subject.domain.service.SubjectInfoDomainService;
 import com.club.subject.infra.basic.entity.SubjectCategory;
+import com.club.subject.infra.basic.entity.SubjectInfo;
 import com.club.subject.infra.basic.service.SubjectCategoryService;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
@@ -98,6 +99,36 @@ public class SubjectController {
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDtoToInfoBo(subjectInfoDTO);
             PageResult<SubjectInfoBO> boList = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
             return Result.ok(boList);
+
+        } catch (Exception e) {
+            log.error("SubjectController.add.err:{}", e.getMessage(), e);
+            return Result.fail("分页查询失败！");
+        }
+    }
+
+    /**
+     * 查看题目信息
+     * @param
+     * @return
+     */
+    @PostMapping("/getSubjectInfo")
+    public Result<SubjectInfoDTO> getSubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.getSubjectPage.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+
+            // 使用 guava 对入参进行校验
+            Preconditions.checkNotNull(subjectInfoDTO.getId(), "题目id不能为空");
+            // Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "分类id不能为空");
+            // Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "标签id不能为空");
+
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConverter.INSTANCE.convertDtoToInfoBo(subjectInfoDTO);
+            SubjectInfoBO bo = subjectInfoDomainService.querySubjectInfo(subjectInfoBO);
+            SubjectInfoDTO infoDTO = SubjectInfoDTOConverter.INSTANCE.convertBoToInfoDto(bo);
+
+            return Result.ok(infoDTO);
 
         } catch (Exception e) {
             log.error("SubjectController.add.err:{}", e.getMessage(), e);

@@ -4,6 +4,8 @@ import com.club.subject.common.enums.ResultCodeEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author serendipity
  * @version 1.0
@@ -11,7 +13,7 @@ import lombok.Data;
  **/
 @Data
 @Builder
-public class Result<T> {
+public class Result<T> implements Serializable {
     private Boolean success;
 
     private Integer code;

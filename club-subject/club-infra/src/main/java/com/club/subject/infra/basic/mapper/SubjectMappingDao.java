@@ -79,5 +79,7 @@ public interface SubjectMappingDao {
     int deleteById(Long id);
 
     List<SubjectMapping> queryDistinctLabelIds(SubjectMapping subjectMapping);
+
+    List<SubjectMapping> queryDistinctLabelId(SubjectMapping subjectMapping);
 }
 

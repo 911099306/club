@@ -2,6 +2,8 @@ package com.club.subject.common.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 分页请求信息
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  * @date 2024/1/14
  **/
-public class PageInfo {
+public class PageInfo implements Serializable {
 
     private Integer pageNo = 1;
 

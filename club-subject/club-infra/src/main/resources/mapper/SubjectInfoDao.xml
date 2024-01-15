@@ -115,14 +115,21 @@ id,subject_name,subject_difficult,settle_name,subject_type,subject_score,subject
         </where>
     </select>
     <select id="countByCondition" resultType="java.lang.Integer">
-        select count(*)
-        from subject_info si , subject_mapping sm
+        select count(1)
+        from subject_info a,
+        subject_mapping b
         where
-            si.subject_difficult = #{subjectInfo.subjectDifficult}
-            and sm.category_id = #{categoryId}
-            and sm.label_id = #{labelId}
-            and si.is_deleted = 0
-            and sm.is_deleted = 0
+        a.id = b.subject_id
+        and b.category_id = #{categoryId}
+        and b.label_id = #{labelId}
+        and a.is_deleted = 0
+        and b.is_deleted = 0
+        <if test="subjectInfo.subjectDifficult != null">
+            and a.subject_difficult = #{subjectInfo.subjectDifficult}
+        </if>
+        <if test="subjectInfo.subjectType != null">
+            and a.subject_type = #{subjectInfo.subjectType}
+        </if>
     </select>
     <select id="queryPage" resultMap="SubjectInfoMap">
         select a.id,
@@ -156,6 +163,10 @@ id,subject_name,subject_difficult,settle_name,subject_type,subject_score,subject
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        # 获取生成的key
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into subject_info(subject_name,subject_difficult,settle_name,subject_type,subject_score,subject_parse,created_by,created_time,update_by,update_time,is_deleted)
         values (#{subjectName},#{subjectDifficult},#{settleName},#{subjectType},#{subjectScore},#{subjectParse},#{createdBy},#{createdTime},#{updateBy},#{updateTime},#{isDeleted})
     </insert>
