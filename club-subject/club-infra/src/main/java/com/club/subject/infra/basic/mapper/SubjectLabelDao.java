@@ -85,5 +85,7 @@ public interface SubjectLabelDao {
      * @return
      */
     List<SubjectLabel> batchQueryById(@Param("list") List<Long> labelIdList);
+
+    List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel);
 }
 

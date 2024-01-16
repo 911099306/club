@@ -1,6 +1,7 @@
 package com.club.subject.domain.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.club.subject.common.enums.CategoryTypeEnum;
 import com.club.subject.common.enums.IsDeletedFlagEnum;
 import com.club.subject.domain.convert.SubjectCategoryConverter;
 import com.club.subject.domain.convert.SubjectLabelConverter;
@@ -9,6 +10,7 @@ import com.club.subject.domain.service.SubjectLabelDomainService;
 import com.club.subject.infra.basic.entity.SubjectCategory;
 import com.club.subject.infra.basic.entity.SubjectLabel;
 import com.club.subject.infra.basic.entity.SubjectMapping;
+import com.club.subject.infra.basic.service.SubjectCategoryService;
 import com.club.subject.infra.basic.service.SubjectLabelService;
 import com.club.subject.infra.basic.service.SubjectMappingService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     private final SubjectLabelService subjectLabelService;
     private final SubjectMappingService subjectMappingService;
+    private final SubjectCategoryService subjectCategoryService;
     @Override
     public Boolean add(SubjectLabelBO subjectLabelBO) {
         if (log.isInfoEnabled()) {
@@ -72,6 +75,18 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
      */
     @Override
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
+
+        // 如果当前分类是1级分类，则查询所有标签
+        //如果当前分类是1级分类，则查询所有标签
+        SubjectCategory subjectCategory = subjectCategoryService.queryById(subjectLabelBO.getCategoryId());
+        if(CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()){
+            SubjectLabel subjectLabel = new SubjectLabel();
+            subjectLabel.setCategoryId(subjectLabelBO.getCategoryId());
+            List<SubjectLabel> labelList = subjectLabelService.queryByCondition(subjectLabel);
+            List<SubjectLabelBO> labelResultList = SubjectLabelConverter.INSTANCE.convertLabelToBoList(labelList);
+            return labelResultList;
+        }
+
         Long categoryId = subjectLabelBO.getCategoryId();
         SubjectMapping subjectMapping =SubjectMapping.builder().build();
         subjectMapping.setCategoryId(categoryId);
