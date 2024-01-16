@@ -1,0 +1,23 @@
+server:
+  port: 4000
+
+minio:
+  url: http://localhost:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+#storage:
+#  service:
+#    type: aliyun
+#nacos:
+#  config:
+#    secret-key: nacos
+#    access-key: nacos
+#    data-id: club-oss
+#    group: DEFAULT_GROUP
+#    type: yaml
+#    server-addr: http://localhost:8848/
+#    auto-refresh: true
+#    remote-first: true
+#    bootstrap:
+#      enable: true
+
