@@ -1,5 +1,6 @@
 package com.club.auth.domain.service.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
 import com.club.auth.common.enums.AuthUserStatusEnum;
 import com.club.auth.common.enums.IsDeletedFlagEnum;
 import com.club.auth.domain.convert.AuthUserBOConverter;
@@ -30,9 +31,32 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Override
     public Boolean register(AuthUserBO authUserBO) {
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
+        authUser.setPassword(SaSecureUtil.md5BySalt(authUser.getPassword(), authUserBO.getUserName() ));
         authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
         authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         Integer count = authUserService.insert(authUser);
+        // TODO 建立初步角色的关联
+        // 将当前用户的角色和权限都刷新的 redis
+        return count > 0;
+    }
+
+    @Override
+    public Boolean update(AuthUserBO authUserBO) {
+        AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
+        authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        Integer count = authUserService.update(authUser);
+        // TODO 任何更新，都要同步到 redis 内
+        return count > 0;
+
+    }
+
+    @Override
+    public Boolean delete(AuthUserBO authUserBO) {
+
+        AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
+        authUser.setIsDeleted(IsDeletedFlagEnum.DELETED.getCode());
+        Integer count = authUserService.update(authUser);
+        // TODO 任何更新，都要同步到 redis 内
         return count > 0;
     }
 }

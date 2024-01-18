@@ -38,9 +38,7 @@ public class UserController {
             if (log.isInfoEnabled()) {
                 log.info("UserController.register.dto:{}", JSON.toJSONString(authUserDTO));
             }
-            Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getUserName()),"用户名不可为空！");
-            Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getPassword()),"用户名不可为空！");
-            Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getEmail()),"邮件地址不可为空！");
+            checkUserInfo(authUserDTO);
             AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
 
             return Result.ok( authUserDomainService.register(authUserBO));
@@ -48,6 +46,103 @@ public class UserController {
             log.error("UserController.register.err:{}", e.getMessage(), e);
             return Result.fail("注册失败！");
         }
+    }
+
+
+    /**
+     * 用户更新
+     * @param authUserDTO 用户注册实体
+     * @return
+     */
+    @PostMapping("update")
+    public Result<Boolean> update(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.update.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            // checkUserInfo(authUserDTO);
+            Preconditions.checkNotNull((authUserDTO.getId()),"用户id不可为空！");
+            AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
+
+            return Result.ok( authUserDomainService.update(authUserBO));
+        } catch (Exception e) {
+            log.error("UserController.register.err:{}", e.getMessage(), e);
+            return Result.fail("更新失败！");
+        }
+    }
+
+    /**
+     * 删除用户
+     * @param authUserDTO 用户注册实体
+     * @return
+     */
+    @PostMapping("delete")
+    public Result<Boolean> delete(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.delete.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            // checkUserInfo(authUserDTO);
+            Preconditions.checkNotNull((authUserDTO.getId()),"用户id不可为空！");
+            AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
+
+            return Result.ok( authUserDomainService.delete(authUserBO));
+        } catch (Exception e) {
+            log.error("UserController.register.err:{}", e.getMessage(), e);
+            return Result.fail("更新失败！");
+        }
+    }
+
+    /**
+     * 启用/禁用用户
+     * @param authUserDTO 用户注册实体
+     * @return
+     */
+    @PostMapping("changeStatus")
+    public Result<Boolean> changeStatus(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.delete.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            // checkUserInfo(authUserDTO);
+            Preconditions.checkNotNull((authUserDTO.getId()),"用户id不可为空！");
+            Preconditions.checkNotNull((authUserDTO.getStatus()),"用户状态不可为空！");
+            AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
+
+            return Result.ok( authUserDomainService.update(authUserBO));
+        } catch (Exception e) {
+            log.error("UserController.register.err:{}", e.getMessage(), e);
+            return Result.fail("更新失败！");
+        }
+    }
+
+    /**
+     * 启用/禁用用户
+     * @param authUserDTO 用户注册实体
+     * @return
+     */
+    @PostMapping("getUserInfo")
+    public Result<Boolean> getUserInfo(@RequestBody AuthUserDTO authUserDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("UserController.delete.dto:{}", JSON.toJSONString(authUserDTO));
+            }
+            // checkUserInfo(authUserDTO);
+            Preconditions.checkNotNull((authUserDTO.getId()),"用户id不可为空！");
+            Preconditions.checkNotNull((authUserDTO.getStatus()),"用户状态不可为空！");
+            AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
+
+            return Result.ok( authUserDomainService.update(authUserBO));
+        } catch (Exception e) {
+            log.error("UserController.register.err:{}", e.getMessage(), e);
+            return Result.fail("更新失败！");
+        }
+    }
+
+    private void checkUserInfo(@RequestBody AuthUserDTO authUserDTO) {
+        Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getUserName()),"用户名不可为空！");
+        Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getPassword()),"密码不可为空！");
+        Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getEmail()),"邮件地址不可为空！");
     }
 
 
