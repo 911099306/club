@@ -12,28 +12,58 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <spring-boot.version>2.4.2</spring-boot.version>
+    <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+    <spring-cloud.version>2020.0.6</spring-cloud.version>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-dependencies</artifactId>
-      <version>2.4.2</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
-    <!-- spring-web -->
+    <!-- web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.4.2</version>
       <exclusions>
         <exclusion>
-          <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-logging</artifactId>
+          <groupId>org.springframework.boot</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <!-- log4j -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
     </dependency>
     <!-- minio -->
     <dependency>
@@ -47,36 +77,23 @@
       <artifactId>lombok</artifactId>
       <version>1.18.16</version>
     </dependency>
-
-    <!-- nacos -->
+    <!-- nacos - config -->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-      <version>2021.1</version>
-      <!-- <version>2.2.6.RELEASE</version> -->
     </dependency>
-    <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-      <!-- <version>2.2.6.RELEASE</version> -->
-      <version>2021.1</version>
-    </dependency>
+    <!-- nacos - bootstrap -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-bootstrap</artifactId>
-      <version>3.0.6</version>
     </dependency>
-
-    <!-- log4j -->
+    <!-- nacos - discovery -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-log4j2</artifactId>
-      <version>2.4.2</version>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
-
 
   </dependencies>
-
   <build>
     <finalName>${project.artifactId}</finalName>
     <!--打包成jar包时的名字-->
@@ -95,6 +112,7 @@
       </plugin>
     </plugins>
   </build>
+
   <repositories>
     <repository>
       <id>central</id>
